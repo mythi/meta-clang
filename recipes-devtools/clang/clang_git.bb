@@ -91,7 +91,8 @@ EXTRA_OEMAKE += "REQUIRES_RTTI=1 VERBOSE=1"
 DEPENDS = "zlib libffi libxml2 binutils"
 DEPENDS_remove_class-nativesdk = "nativesdk-binutils"
 DEPENDS_append_class-nativesdk = " clang-native virtual/${TARGET_PREFIX}binutils-crosssdk virtual/${TARGET_PREFIX}gcc-crosssdk virtual/${TARGET_PREFIX}g++-crosssdk"
-DEPENDS_append_class-target = " clang-native "
+GCC_TOOLCHAIN = "virtual/${TARGET_PREFIX}gcc virtual/${TARGET_PREFIX}g++"
+DEPENDS_append_class-target = " clang-native ${@bb.utils.contains('TOOLCHAIN', 'gcc','${GCC_TOOLCHAIN}','',d)}"
 
 do_configure_prepend() {
 	# Remove RPATHs
